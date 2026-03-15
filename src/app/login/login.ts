@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -10,15 +10,24 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class Login {
 
+  constructor(private router: Router) {}
+
+    submitted = false;
+
     profileForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(3)]),
       password: new FormControl('', [Validators.required, Validators.minLength(5)])
     });
 
     onSubmit() {
-      if (this.profileForm.valid) {
-        console.log(this.profileForm.value);
-        }
+
+      this.submitted = true;
+
+      if (this.profileForm.invalid) {
+        return;
+      }
+
+      this.router.navigate(['/home']);
       }
 
   showPassword = true;
@@ -27,4 +36,13 @@ export class Login {
     this.showPassword = !this.showPassword;
 
   }
+
+  get username() {
+    return this.profileForm.get('username');
+  }
+
+  get password() {
+    return this.profileForm.get('password');
+  }
+
 }
