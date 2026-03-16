@@ -1,0 +1,93 @@
+<h2 class="flex justify-center text-white mt-15 font-bold text-5xl cursor-default">Budget<span class="font-light">Builder</span></h2>
+<div class="flex justify-center mt-40">
+    <div class="bg-gradient-to-t from-sky-500 to-sky-400 rounded-2xl shadow-lg p-8 w-full max-w-md">
+        <h2 class="text-2xl text-white text-center mb-6 cursor-default">Login</h2>
+
+        <form [formGroup]="profileForm" class="space-y-4" (ngSubmit)="onSubmit()">
+
+            <label class="flex text-white text-sm font-medium mb-1 ml-2 py-2">Username</label>
+
+            <input
+                autofocus
+                formControlName="username"
+                type="text"
+                spellcheck="false"
+                class="
+                transition duration-300 ease-in-out
+                w-full border-2 border-sky-300  rounded-lg px-3 py-2 focus:outline-none focus:ring-3 focus:ring-sky-100 text-white placeholder-sky-300"
+                placeholder="username"
+                [class.!border-red-500]="profileForm.get('username')?.invalid && submitted"
+
+                >
+
+                @if (submitted && username?.invalid) {
+                <div class="text-xs font-bold text-red-500 ml-2">
+
+                    @if (username?.errors?.['required']) {
+                        <p>Username is required</p>
+                    }
+
+                    @if (username?.errors?.['minlength']) {
+                        <p>Username must be at least 3 characters</p>
+                    }
+                </div>
+            }
+
+
+            <label class="block text-white text-sm font-medium mb-1 ml-2 py-2">Password</label>
+            <input
+                type="password"
+                spellcheck="false"
+                formControlName="password"
+                class="
+                transition duration-300 ease-in-out
+                w-full border-2 border-sky-300  rounded-lg px-3 py-2 focus:outline-none focus:ring-3 focus:ring-sky-100 text-white placeholder-sky-300"
+                placeholder="password"
+                [class.!border-red-500]="profileForm.get('password')?.invalid && submitted"
+                >
+
+            @if (submitted && password?.invalid) {
+                <div class="text-xs font-bold text-red-500 ml-2">
+
+                    @if (password?.errors?.['required']) {
+                        <p>Password is required</p>
+                    }
+
+                    @if (password?.errors?.['minlength']) {
+                        <p>Password must be at least 5 characters</p>
+                    }
+                </div>
+            }
+
+            <button
+                type="button"
+                (click)="togglePassword()"
+                class="absolute right-4 top-0 h-full flex items-center"
+                >
+                
+            </button>
+
+            <button
+                type="submit"
+                class="w-full py-2 text-xl text-white font-bold rounded-lg mt-6 shadow-sm
+                    border-2 border-sky-300
+                    hover:scale-103 transform transition-transform duration-200">
+            Submit
+            </button>
+
+            <button
+                routerLink="/create-account"
+                class="text-white text-sm px-2 py-1 rounded-lg font-medium mt-2 hover:ring-3 transition-all duration-250"
+            >
+            Create an Account
+            </button>
+
+            <button
+                type="button"
+                class=" text-xs text-white px-2 py-1 ml-34 rounded-lg  hover:underline"
+            >
+                Forgot Password
+            </button>
+
+        </form>
+    </div>
