@@ -1,0 +1,15 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class LoginService {
+  private url = 'http://localhost:8080/api/account';
+
+  constructor(private http: HttpClient) {}
+
+  login(username: string, password: string) {
+    return this.http.post(this.url, {username, password}, {responseType: 'text'});
+  }
+}

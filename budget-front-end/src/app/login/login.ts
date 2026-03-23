@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoginService } from '../login-service';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +11,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class Login {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loginService: LoginService) {}
 
     submitted = false;
+
+    message = "";
 
     profileForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -27,7 +30,18 @@ export class Login {
         return;
       }
 
-      this.router.navigate(['/home']);
+      console.log(this.profileForm.value);
+
+      this.loginService.login(this.username?.value!, this.password?.value!).subscribe({
+        next: (res) => {
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          
+          this.message = "Incorrect username or password";
+        }
+      }
+      );
       }
 
   showPassword = true;

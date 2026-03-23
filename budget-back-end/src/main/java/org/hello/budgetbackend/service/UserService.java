@@ -10,4 +10,6 @@ public interface UserService {
 
     void deleteUser(Long userId);
 
+    boolean validateUser(String username, String password);
+
 }
