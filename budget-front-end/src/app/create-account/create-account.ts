@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CreateService } from '../create-service';
 
 @Component({
   selector: 'app-create-account',
@@ -10,9 +11,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class CreateAccount {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private createService: CreateService) {}
 
   submitted = false;
+  message = "";
 
   formValid = new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -29,7 +31,15 @@ export class CreateAccount {
       return;
     }
 
-    this.router.navigate(['/home']);
+    this.createService.create(this.firstName?.value!, this.username?.value!, this.email?.value!, this.password?.value!).subscribe({
+      next: (res) => {
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.message = err.value;
+      }
+    })
+
   }
 
   get firstName() {

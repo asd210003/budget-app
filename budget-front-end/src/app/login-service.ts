@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LoginService {
-  private url = 'http://localhost:8080/api/account';
+  private url = 'http://localhost:8080/api/login';
 
   constructor(private http: HttpClient) {}
 

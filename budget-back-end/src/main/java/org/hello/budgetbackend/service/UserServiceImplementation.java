@@ -15,6 +15,9 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public User saveUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent() || userRepository.findByEmail(user.getEmail()).isPresent()) {
+            return null;
+        }
         return userRepository.save(user);
     }
 

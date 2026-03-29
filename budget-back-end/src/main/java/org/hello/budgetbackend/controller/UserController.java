@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/account")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
 
         String username = user.getUsername();
@@ -26,6 +26,16 @@ public class UserController {
             return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody User user) {
+
+        if (userService.saveUser(user) != null) {
+            return ResponseEntity.ok("Account created.");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Account already created with username and/or email");
         }
     }
 

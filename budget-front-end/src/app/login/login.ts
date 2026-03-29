@@ -30,14 +30,11 @@ export class Login {
         return;
       }
 
-      console.log(this.profileForm.value);
-
       this.loginService.login(this.username?.value!, this.password?.value!).subscribe({
         next: (res) => {
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          
           this.message = "Incorrect username or password";
         }
       }
